@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    TicketSwap\Supporting\KafkaBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection}'
+
+    RdKafka\KafkaConsumer:
+        factory: ['TicketSwap\Supporting\KafkaBundle\Consumer\KafkaConsumerFactory', create]
+        arguments:
+            $brokerList: '%kafka_broker_list%'
+            $saslEnabled: '%kafka_sasl_enabled%'
+            $saslUsername: '%kafka_sasl_username%'
+            $saslPassword: '%kafka_sasl_password%'
+
+    TicketSwap\Supporting\KafkaBundle\Consumer\KafkaConsumer:
+        arguments:
+            - '@RdKafka\KafkaConsumer'
