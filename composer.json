@@ -7,6 +7,11 @@
             "TicketSwap\\Kafka\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "TicketSwap\\Kafka\\": "tests/"
+        }
+    },
     "require": {
         "php": "^7.3",
         "ext-pcntl": "*",
@@ -15,7 +20,8 @@
         "symfony/config": "^4.3",
         "symfony/http-kernel": "^4.3",
         "symfony/console": "^4.3",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1",
+        "mockery/mockery": "^1.3"
     },
     "suggest": {
         "ext-newrelic": "*"
@@ -23,5 +29,8 @@
     "require-dev": {
         "phpunit/phpunit": "^8.5",
         "kwn/php-rdkafka-stubs": "^1.3"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }
