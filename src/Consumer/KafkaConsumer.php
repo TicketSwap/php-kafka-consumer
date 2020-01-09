@@ -10,7 +10,7 @@ use RdKafka\Message;
 use TicketSwap\Kafka\Exception\KafkaException;
 use TicketSwap\Kafka\Exception\NoSubscriptionsException;
 
-final class KafkaConsumer
+class KafkaConsumer
 {
     /**
      * @var RdKafkaConsumer

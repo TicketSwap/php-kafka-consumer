@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CliBundle\Command\Kafka;
+namespace TicketSwap\Kafka\Bundle\Command;
 
 use LongRunning\Core\Cleaner;
 use Psr\Log\LoggerInterface;
