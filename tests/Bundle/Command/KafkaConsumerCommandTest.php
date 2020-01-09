@@ -10,7 +10,7 @@ use RdKafka\Message;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use TicketSwap\Kafka\Consumer\KafkaConsumer;
-use TicketSwap\Kafka\Subscriptions\KafkaSubscription;
+use TicketSwap\Kafka\Subscription\KafkaSubscription;
 
 class KafkaConsumerCommandTest extends TestCase
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace TicketSwap\Supporting\KafkaBundle\DependencyInjection;
+namespace TicketSwap\Kafka\Bundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-final class TicketSwapSupportingKafkaExtension extends Extension
+final class TicketSwapKafkaConsumerExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container) : void
     {

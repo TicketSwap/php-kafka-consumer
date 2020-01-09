@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace TicketSwap\Kafka\Subscriptions;
+namespace TicketSwap\Kafka\Subscription;
 
 use RdKafka\Message;
 

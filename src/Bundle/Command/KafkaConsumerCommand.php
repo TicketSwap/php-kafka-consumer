@@ -14,39 +14,39 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 use TicketSwap\Kafka\Consumer\KafkaConsumer;
 use TicketSwap\Kafka\Exception\NoSubscriptionsException;
-use TicketSwap\Kafka\Subscriptions\KafkaSubscription;
+use TicketSwap\Kafka\Subscription\KafkaSubscription;
 
 class KafkaConsumerCommand extends Command
 {
     /**
      * @var KafkaConsumer
      */
-    private $consumer;
+    protected $consumer;
 
     /**
      * @var LoggerInterface
      */
-    private $logger;
+    protected $logger;
 
     /**
      * @var iterable<KafkaSubscription>
      */
-    private $subscriptions;
+    protected $subscriptions;
 
     /**
      * @var bool
      */
-    private $run = true;
+    protected $run = true;
 
     /**
      * @var Cleaner
      */
-    private $cleaner;
+    protected $cleaner;
 
     /**
      * @var string
      */
-    private $environment;
+    protected $environment;
 
     /**
      * @param KafkaSubscription[] $subscriptions
@@ -78,6 +78,10 @@ class KafkaConsumerCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output) : ?int
     {
+        if ($output->isVerbose() === true) {
+            $output->writeln('Started Kafka consumer');
+        }
+
         pcntl_async_signals(true);
         pcntl_signal(SIGTERM, [$this, 'stopCommand']);
         pcntl_signal(SIGQUIT, [$this, 'stopCommand']);
@@ -98,6 +102,10 @@ class KafkaConsumerCommand extends Command
         }
 
         $this->consumer->subscribeToTopics($topicNames);
+
+        if ($output->isVerbose() === true) {
+            $output->writeln('Subscribed to topics and consuming messages...');
+        }
 
         while ($this->run === true) {
             $message = $this->consumer->consume();
