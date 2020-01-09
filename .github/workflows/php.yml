@@ -3,12 +3,55 @@ name: PHP Composer
 on: [push]
 
 jobs:
-  build:
-
+  run:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        php-versions: ['7.4', '7.3']
+        librdkafka-version: ['1.3.0']
+        rdkafka-version: ['3.1.3']
+
+    name: PHP ${{ matrix.php-versions }} tests
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v1
+        id: librdkafka-cache
+        with:
+          path: librdkafka-1.3.0
+          key: ${{ matrix.php-versions }}-librdkafka-${{ matrix.librdkafka-version }}
+
+      - name: Install librdkafka
+        if: steps.librdkafka-cache.outputs.cache-hit != 'true'
+        run: |
+          curl --silent --show-error --location --fail --retry 3 --output librdkafka.tar.gz https://github.com/edenhill/librdkafka/archive/v${{ matrix.librdkafka-version }}.tar.gz \
+            && tar -xzvf librdkafka.tar.gz \
+            && rm librdkafka.tar.gz \
+            && cd librdkafka-${{ matrix.librdkafka-version }} \
+            && ./configure \
+            && make \
+            && sudo make install
+
+      - name: Install librdkafka from cache
+        if: steps.librdkafka-cache.outputs.cache-hit == 'true'
+        run: |
+          cd librdkafka-${{ matrix.librdkafka-version }} \
+          && sudo make install
+
+      - uses: actions/cache@v1
+        id: composer-cache
+        with:
+          path: vendor
+          key: ${{ matrix.php-versions }}-composer
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: pecl
+          extensions: rdkafka-${{ matrix.rdkafka-version }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate
