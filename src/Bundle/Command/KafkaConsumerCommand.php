@@ -182,7 +182,10 @@ class KafkaConsumerCommand extends Command
         $this->run = false;
     }
 
-    protected function logError($message, array $context = array()) : void
+    /**
+     * @param array<string, string> $context
+     */
+    protected function logError(string $message, array $context = array()) : void
     {
         $this->logger->error($message, $context);
     }
