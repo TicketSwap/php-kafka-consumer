@@ -92,7 +92,7 @@ class KafkaConsumerCommandTest extends TestCase
 
         // Error handling for failing message
         $this->logger->shouldReceive('error');
-        $this->logger->shouldReceive('notice')->with('Shutting down Kafka Consumer');
+        $this->logger->shouldReceive('notice')->with('Shutting down Kafka Consumer', []);
 
         $this->cleaner->shouldReceive('cleanUp');
 
@@ -130,7 +130,7 @@ class KafkaConsumerCommandTest extends TestCase
 
         // Error handling for failing message
         $this->logger->shouldReceive('error');
-        $this->logger->shouldReceive('notice')->with('Shutting down Kafka Consumer');
+        $this->logger->shouldReceive('notice')->with('Shutting down Kafka Consumer', []);
 
         // Act
         $command       = $this->application->find('ticketswap:kafka-consumer');

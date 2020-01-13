@@ -24,7 +24,7 @@ class KafkaConsumerCommand extends Command
     protected $consumer;
 
     /**
-     * @var LoggerInterface
+     * @var null|LoggerInterface
      */
     protected $logger;
 
@@ -53,7 +53,7 @@ class KafkaConsumerCommand extends Command
      */
     public function __construct(
         KafkaConsumer $consumer,
-        LoggerInterface $logger,
+        ?LoggerInterface $logger,
         Cleaner $cleaner,
         iterable $subscriptions,
         string $environment
@@ -177,9 +177,17 @@ class KafkaConsumerCommand extends Command
 
     public function stopCommand() : void
     {
-        $this->logger->notice('Shutting down Kafka Consumer');
+        $this->logNotice('Shutting down Kafka Consumer');
 
         $this->run = false;
+    }
+
+    /**
+     * @param array<string, string> $context
+     */
+    protected function logNotice(string $message, array $context = array()) : void
+    {
+        $this->logger->notice($message, $context);
     }
 
     /**
