@@ -96,7 +96,7 @@ class KafkaConsumerCommand extends Command
 
             if ($this->environment === 'prod' && $subscription->subscribesTo($topicName) === true) {
                 $topicNames[] = $subscription->getTopicName();
-            } elseif ($this->environment === 'dev') {
+            } elseif ($this->environment === 'dev' || $this->environment === 'test') {
                 $topicNames[] = $subscription->getTopicName();
             }
         }
