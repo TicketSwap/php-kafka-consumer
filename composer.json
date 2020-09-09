@@ -13,7 +13,7 @@
         }
     },
     "require": {
-        "php": "^7.3",
+        "php": "^7.4",
         "ext-pcntl": "*",
         "long-running/long-running": "^0.4",
         "symfony/dependency-injection": "^3.4|^4.3",
