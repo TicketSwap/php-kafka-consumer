@@ -17,7 +17,10 @@ class KafkaConsumer
      */
     private $consumer;
 
-    private const CONSUMER_INTERVAL = 120 * 1000;
+    /**
+     * Wait 5 seconds before timing out.
+     */
+    private const CONSUMER_TIMEOUT_MS = 5000;
 
     public function __construct(RdKafkaConsumer $consumer)
     {
@@ -46,7 +49,7 @@ class KafkaConsumer
         }
 
         try {
-            return $this->consumer->consume(self::CONSUMER_INTERVAL);
+            return $this->consumer->consume(self::CONSUMER_TIMEOUT_MS);
         } catch (KafkaException $exception) {
             if ($exception->isCausedByTimeout() === true) {
                 /*
