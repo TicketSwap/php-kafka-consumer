@@ -12,6 +12,7 @@ services:
         factory: ['TicketSwap\Kafka\Consumer\KafkaConsumerFactory', create]
         arguments:
             $brokerList: '%kafka_broker_list%'
+            $groupId: '%kafka_group_id%'
             $saslEnabled: '%kafka_sasl_enabled%'
             $saslUsername: '%kafka_sasl_username%'
             $saslPassword: '%kafka_sasl_password%'

@@ -14,6 +14,7 @@ class KafkaConsumerFactoryTest extends TestCase
         // Arrange
         $consumer = KafkaConsumerFactory::create(
             '',
+            'group.id',
             false,
             null,
             null

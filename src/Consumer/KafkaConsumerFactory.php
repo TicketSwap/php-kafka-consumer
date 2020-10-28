@@ -31,6 +31,7 @@ final class KafkaConsumerFactory
      */
     public static function create(
         string $brokerList,
+        string $groupId,
         bool $saslEnabled,
         ?string $saslUsername,
         ?string $saslPassword
@@ -67,8 +68,9 @@ final class KafkaConsumerFactory
         });
 
         // Configure the group.id. All consumers with the same group.id will consume
-        // different partitions. Using username with consumer suffix for CloudKarafka
-        $configuration->set('group.id', sprintf('%s-consumer', $saslUsername ?? 'website'));
+        // different partitions. Using sasl username as suffix for CloudKarafka
+        $actualGroupId = sprintf('%s%s', $saslUsername ? $saslUsername . '-' : '', $groupId);
+        $configuration->set('group.id', $actualGroupId);
 
         // Set timeout
         $configuration->set('queue.buffering.max.ms', self::BUFFERING_MAX_MS);
