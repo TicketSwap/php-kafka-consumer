@@ -83,6 +83,7 @@ class KafkaConsumerCommand extends Command
         }
 
         pcntl_async_signals(true);
+        pcntl_sigprocmask(SIG_BLOCK, [SIGIO]);
         pcntl_signal(SIGTERM, [$this, 'stopCommand']);
         pcntl_signal(SIGQUIT, [$this, 'stopCommand']);
         pcntl_signal(SIGINT, [$this, 'stopCommand']);
@@ -180,6 +181,9 @@ class KafkaConsumerCommand extends Command
         $this->logNotice('Shutting down Kafka Consumer');
 
         $this->run = false;
+
+        posix_kill(posix_getpid(), SIGIO);
+        pcntl_signal_dispatch();
     }
 
     /**

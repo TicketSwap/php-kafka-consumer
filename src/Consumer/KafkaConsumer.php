@@ -18,9 +18,9 @@ class KafkaConsumer
     private $consumer;
 
     /**
-     * Wait 5 seconds before timing out.
+     * Wait 1 second before timing out.
      */
-    private const CONSUMER_TIMEOUT_MS = 5000;
+    private const CONSUMER_TIMEOUT_MS = 1000;
 
     public function __construct(RdKafkaConsumer $consumer)
     {

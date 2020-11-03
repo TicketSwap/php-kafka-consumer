@@ -86,6 +86,10 @@ final class KafkaConsumerFactory
         // 'smallest': start from the beginning
         $configuration->set('auto.offset.reset', self::SMALLEST);
 
+        // Sets a signal to listen for to terminate internal processes. This prevents
+        // lingering processes to block shutdown.
+        $configuration->set('internal.termination.signal', (string) SIGIO);
+
         $consumer = new RdKafkaConsumer($configuration);
 
         return $consumer;
