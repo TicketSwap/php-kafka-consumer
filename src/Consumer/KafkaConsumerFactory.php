@@ -12,7 +12,6 @@ use TicketSwap\Kafka\Exception\KafkaException;
 final class KafkaConsumerFactory
 {
     private const TIMEOUT_MS               = '5000';
-    private const BUFFERING_MAX_MS         = '1';
     private const SASL_SCRAM               = 'sasl_scram';
     private const SASL_SSL                 = 'sasl_ssl';
     private const SCRAM_SHA_256            = 'SCRAM-SHA-256';
@@ -73,7 +72,6 @@ final class KafkaConsumerFactory
         $configuration->set('group.id', $actualGroupId);
 
         // Set timeout
-        $configuration->set('queue.buffering.max.ms', self::BUFFERING_MAX_MS);
         $configuration->set('socket.timeout.ms', self::TIMEOUT_MS);
 
         // Initial list of Kafka brokers
