@@ -10,8 +10,8 @@ jobs:
       matrix:
         php-versions: ['7.4']
         dependencies: ['normal', 'highest','lowest']
-        librdkafka-version: ['1.3.0']
-        rdkafka-version: ['3.1.3']
+        librdkafka-version: ['1.5.2']
+        rdkafka-version: ['4.0.4']
 
     name: PHP ${{ matrix.php-versions }} tests with ${{ matrix.dependencies }} dependencies
     steps:
@@ -21,7 +21,7 @@ jobs:
       - uses: actions/cache@v1
         id: librdkafka-cache
         with:
-          path: librdkafka-1.3.0
+          path: librdkafka-${{ matrix.librdkafka-version }}
           key: ${{ matrix.php-versions }}-librdkafka-${{ matrix.librdkafka-version }}
 
       - name: Install librdkafka
