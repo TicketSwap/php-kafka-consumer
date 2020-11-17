@@ -92,6 +92,7 @@ class KafkaConsumerCommandTest extends TestCase
 
         // Error handling for failing message
         $this->logger->shouldReceive('error');
+        $this->logger->shouldReceive('notice')->with('All brokers are down, stopping consumer...', []);
         $this->logger->shouldReceive('notice')->with('Shutting down Kafka Consumer', []);
 
         $this->cleaner->shouldReceive('cleanUp');
@@ -130,6 +131,7 @@ class KafkaConsumerCommandTest extends TestCase
 
         // Error handling for failing message
         $this->logger->shouldReceive('error');
+        $this->logger->shouldReceive('notice')->with('All brokers are down, stopping consumer...', []);
         $this->logger->shouldReceive('notice')->with('Shutting down Kafka Consumer', []);
 
         // Act

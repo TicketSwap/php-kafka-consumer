@@ -109,16 +109,30 @@ class KafkaConsumerCommand extends Command
         }
 
         while ($this->run === true) {
+            if ($output->isDebug() === true) {
+                $output->writeln('Started another round of consuming...');
+            }
+
             $message = $this->consumer->consume();
 
             switch ($message->err) {
                 case RD_KAFKA_RESP_ERR_NO_ERROR:
+                    if ($output->isDebug() === true) {
+                        $output->writeln('Got a message, handling it now...');
+                    }
+
                     $this->handleMessage($message);
                     break;
                 case RD_KAFKA_RESP_ERR__PARTITION_EOF:
                 case RD_KAFKA_RESP_ERR__TIMED_OUT:
+                    if ($output->isDebug() === true) {
+                        $output->writeln('End of partition or timeout encountered...');
+                    }
+
                     break;
                 case RD_KAFKA_RESP_ERR__ALL_BROKERS_DOWN:
+                    $this->logNotice('All brokers are down, stopping consumer...');
+
                     $this->stopCommand();
                     break;
                 default:
