@@ -16,6 +16,7 @@ services:
             $saslEnabled: '%kafka_sasl_enabled%'
             $saslUsername: '%kafka_sasl_username%'
             $saslPassword: '%kafka_sasl_password%'
+            $sslCertificateLocation: '%kafka_ssl_certificate_location%'
 
     TicketSwap\Kafka\Consumer\KafkaConsumer:
         arguments:
