@@ -19,10 +19,11 @@ final class KafkaConsumerFactory
     private const SSL_CERTIFICATE_LOCATION = '/etc/ssl/certs/cloudkarafka.ca';
 
     /**
-     * @param string $brokerList   Comma-separated string of broker addresses
-     * @param bool   $saslEnabled  Whether SASL security is enabled for the Kafka cluster (uses SASL_SCRAM)
-     * @param string $saslUsername Username for SASL security as provided by the cluster host
-     * @param string $saslPassword Password for SASL security as provided by the cluster host
+     * @param string      $brokerList             Comma-separated string of broker addresses
+     * @param bool        $saslEnabled            Whether SASL security is enabled for the Kafka cluster (uses SASL_SCRAM)
+     * @param null|string $saslUsername           Username for SASL security as provided by the cluster host
+     * @param null|string $saslPassword           Password for SASL security as provided by the cluster host
+     * @param null|string $sslCertificateLocation Location on the filesystem of an SSL certificate (if needed)
      *
      * @throws Exception
      *
@@ -32,18 +33,24 @@ final class KafkaConsumerFactory
         string $brokerList,
         string $groupId,
         bool $saslEnabled,
-        ?string $saslUsername,
-        ?string $saslPassword
+        ?string $saslUsername = null,
+        ?string $saslPassword = null,
+        ?string $sslCertificateLocation = null
     ) : RdKafkaConsumer {
         $configuration = new Conf();
 
         if ($saslEnabled === true) {
             $configuration->set('builtin.features', self::SASL_SCRAM);
             $configuration->set('security.protocol', self::SASL_SSL);
-            $configuration->set('ssl.ca.location', self::SSL_CERTIFICATE_LOCATION);
             $configuration->set('sasl.mechanisms', self::SCRAM_SHA_256);
             $configuration->set('sasl.username', $saslUsername);
             $configuration->set('sasl.password', $saslPassword);
+
+            $sslCertificateLocation = $sslCertificateLocation ?? self::SSL_CERTIFICATE_LOCATION;
+
+            if (file_exists($sslCertificateLocation) === true) {
+                $configuration->set('ssl.ca.location', self::SSL_CERTIFICATE_LOCATION);
+            }
         }
 
         $configuration->setErrorCb(static function ($kafka, $error, $reason) : void {

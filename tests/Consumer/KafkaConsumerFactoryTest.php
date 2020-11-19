@@ -23,4 +23,22 @@ class KafkaConsumerFactoryTest extends TestCase
         // Assert
         self::assertInstanceOf(\RdKafka\KafkaConsumer::class, $consumer);
     }
+
+    /**
+     * @test
+     */
+    public function it_should_create_a_correct_consumer_if_no_ssl_certificate_is_found() : void
+    {
+        // Arrange
+        $consumer = KafkaConsumerFactory::create(
+            '',
+            'group.id',
+            true,
+            'foo',
+            'bar'
+        );
+
+        // Assert
+        self::assertInstanceOf(\RdKafka\KafkaConsumer::class, $consumer);
+    }
 }
