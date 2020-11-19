@@ -19,6 +19,7 @@ services:
             $sslCertificateLocation: '%kafka_ssl_certificate_location%'
 
     TicketSwap\Kafka\Consumer\KafkaConsumer:
+        lazy: true
         arguments:
             - '@RdKafka\KafkaConsumer'
 
