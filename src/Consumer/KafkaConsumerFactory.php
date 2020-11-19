@@ -20,6 +20,7 @@ final class KafkaConsumerFactory
 
     /**
      * @param string      $brokerList             Comma-separated string of broker addresses
+     * @param string      $groupId                The consumer group identifier to use. Will be prefixed by the sasl username of sasl is enabled
      * @param bool        $saslEnabled            Whether SASL security is enabled for the Kafka cluster (uses SASL_SCRAM)
      * @param null|string $saslUsername           Username for SASL security as provided by the cluster host
      * @param null|string $saslPassword           Password for SASL security as provided by the cluster host
