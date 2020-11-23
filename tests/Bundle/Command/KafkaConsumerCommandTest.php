@@ -100,7 +100,7 @@ class KafkaConsumerCommandTest extends TestCase
         // Act
         $command       = $this->application->find('ticketswap:kafka-consumer');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['command' => $command->getName()]);
+        $commandTester->execute(['command' => $command->getName(), '--all-topics' => true]);
 
         // Assert
         $this->subscription->shouldHaveReceived('handle');

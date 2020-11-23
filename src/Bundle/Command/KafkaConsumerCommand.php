@@ -11,6 +11,7 @@ use RdKafka\Exception;
 use RdKafka\Message;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Throwable;
 use TicketSwap\Kafka\Consumer\KafkaConsumer;
@@ -52,16 +53,24 @@ class KafkaConsumerCommand extends Command
     protected function configure() : void
     {
         $this->setName('ticketswap:kafka-consumer');
+        $this->addOption('topic', null, InputOption::VALUE_REQUIRED, 'The Kafka topic to consume.');
+        $this->addOption('all-topics', null,InputOption::VALUE_NONE, 'The Kafka topic to consume.');
     }
 
     /**
      * @throws Exception
      * @throws NoSubscriptionsException
      */
-    public function execute(InputInterface $input, OutputInterface $output) : ?int
+    public function execute(InputInterface $input, OutputInterface $output) : int
     {
+        if ($input->getOption('all-topics') === false && $input->getOption('topic') === null) {
+            $output->writeln('<error>Please specify the topic to consume (--topic=<topic>) or use --all-topics to consume all topics.</error>');
+
+            return 1;
+        }
+
         if ($output->isVerbose() === true) {
-            $output->writeln('Started Kafka consumer');
+            $output->writeln('Starting Kafka consumer');
         }
 
         pcntl_async_signals(true);
@@ -71,23 +80,29 @@ class KafkaConsumerCommand extends Command
         pcntl_signal(SIGINT, fn() => $this->stopCommand($output));
 
         $topicNames = [];
-
         foreach ($this->subscriptions as $subscription) {
-            // To allow for individual scaling, the consumer will only listen to 1 topic in production.
-            // This is decided by a system environment variable
-            $topicName = (string) getenv('KAFKA_TOPIC');
-
-            if ($this->environment === 'prod' && $subscription->subscribesTo($topicName) === true) {
-                $topicNames[] = $subscription->getTopicName();
-            } elseif ($this->environment === 'dev' || $this->environment === 'test') {
-                $topicNames[] = $subscription->getTopicName();
+            if ($input->getOption('all-topics') === false) {
+                if ($subscription->subscribesTo($input->getOption('topic')) === false) {
+                    continue;
+                }
             }
+
+            if ($output->isVerbose() === true) {
+                $output->writeln(sprintf('Subscribing to topic "%s"', $subscription->getTopicName()));
+            }
+            $topicNames[] = $subscription->getTopicName();
+        }
+
+        if (count($topicNames) === 0) {
+            $output->writeln(sprintf('<error>No subscriptions found matching topic "%s"</error>', $input->getOption('topic')));
+
+            return 1;
         }
 
         $this->consumer->subscribeToTopics($topicNames);
 
         if ($output->isVerbose() === true) {
-            $output->writeln('Subscribed to topics and consuming messages...');
+            $output->writeln(sprintf('Subscribed to %d topic(s) and consuming messages...', count($topicNames)));
         }
 
         while ($this->run === true) {
