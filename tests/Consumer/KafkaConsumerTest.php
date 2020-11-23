@@ -5,11 +5,10 @@ namespace TicketSwap\Kafka\Consumer;
 use Mockery;
 use RdKafka\KafkaConsumer as RdKafkaConsumer;
 use RdKafka\Message;
-use PHPUnit\Framework\TestCase;
 use TicketSwap\Kafka\Exception\KafkaException;
 use TicketSwap\Kafka\Exception\NoSubscriptionsException;
 
-class KafkaConsumerTest extends TestCase
+class KafkaConsumerTest extends Mockery\Adapter\Phpunit\MockeryTestCase
 {
     /**
      * @var Mockery\MockInterface|RdKafkaConsumer

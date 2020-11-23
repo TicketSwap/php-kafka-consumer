@@ -4,7 +4,6 @@ namespace TicketSwap\Kafka\Bundle\Command;
 
 use LongRunning\Core\Cleaner;
 use Mockery;
-use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use RdKafka\Message;
 use Symfony\Component\Console\Application;
@@ -12,7 +11,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use TicketSwap\Kafka\Consumer\KafkaConsumer;
 use TicketSwap\Kafka\Subscription\KafkaSubscription;
 
-class KafkaConsumerCommandTest extends TestCase
+class KafkaConsumerCommandTest extends Mockery\Adapter\Phpunit\MockeryTestCase
 {
     /**
      * @var Application
@@ -58,11 +57,6 @@ class KafkaConsumerCommandTest extends TestCase
                 'dev'
             )
         );
-    }
-
-    protected function tearDown() : void
-    {
-        Mockery::close();
     }
 
     /**
