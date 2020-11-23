@@ -66,9 +66,9 @@ class KafkaConsumerCommand extends Command
 
         pcntl_async_signals(true);
         pcntl_sigprocmask(SIG_BLOCK, [SIGIO]);
-        pcntl_signal(SIGTERM, [$this, 'stopCommand']);
-        pcntl_signal(SIGQUIT, [$this, 'stopCommand']);
-        pcntl_signal(SIGINT, [$this, 'stopCommand']);
+        pcntl_signal(SIGTERM, fn() => $this->stopCommand($output));
+        pcntl_signal(SIGQUIT, fn() => $this->stopCommand($output));
+        pcntl_signal(SIGINT, fn() => $this->stopCommand($output));
 
         $topicNames = [];
 
@@ -115,7 +115,7 @@ class KafkaConsumerCommand extends Command
                 case RD_KAFKA_RESP_ERR__ALL_BROKERS_DOWN:
                     $this->logNotice('All brokers are down, stopping consumer...');
 
-                    $this->stopCommand();
+                    $this->stopCommand($output);
                     break;
                 default:
                     $output->writeln($message->errstr());
@@ -172,9 +172,13 @@ class KafkaConsumerCommand extends Command
         $this->cleaner->cleanUp();
     }
 
-    public function stopCommand() : void
+    public function stopCommand(OutputInterface $output) : void
     {
-        $this->logNotice('Shutting down Kafka Consumer');
+        if ($output->isVerbose() === true) {
+            $output->writeln('Shutting down Kafka Consumer');
+        } else {
+            $this->logNotice('Shutting down Kafka Consumer');
+        }
 
         $this->run = false;
 
