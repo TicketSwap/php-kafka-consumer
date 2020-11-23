@@ -18,35 +18,16 @@ use TicketSwap\Kafka\Subscription\KafkaSubscription;
 
 class KafkaConsumerCommand extends Command
 {
-    /**
-     * @var KafkaConsumer
-     */
-    protected $consumer;
-
-    /**
-     * @var null|LoggerInterface
-     */
-    protected $logger;
+    protected KafkaConsumer $consumer;
+    protected ?LoggerInterface $logger;
+    protected bool $run = true;
+    protected Cleaner $cleaner;
+    protected string $environment;
 
     /**
      * @var iterable<KafkaSubscription>
      */
-    protected $subscriptions;
-
-    /**
-     * @var bool
-     */
-    protected $run = true;
-
-    /**
-     * @var Cleaner
-     */
-    protected $cleaner;
-
-    /**
-     * @var string
-     */
-    protected $environment;
+    protected iterable $subscriptions;
 
     /**
      * @param KafkaSubscription[] $subscriptions
