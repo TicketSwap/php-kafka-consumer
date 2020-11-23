@@ -6,6 +6,7 @@ namespace TicketSwap\Kafka\Bundle\Command;
 
 use LongRunning\Core\Cleaner;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use RdKafka\Exception;
 use RdKafka\Message;
 use Symfony\Component\Console\Command\Command;
@@ -19,7 +20,7 @@ use TicketSwap\Kafka\Subscription\KafkaSubscription;
 class KafkaConsumerCommand extends Command
 {
     protected KafkaConsumer $consumer;
-    protected ?LoggerInterface $logger;
+    protected LoggerInterface $logger;
     protected bool $run = true;
     protected Cleaner $cleaner;
     protected string $environment;
@@ -42,7 +43,7 @@ class KafkaConsumerCommand extends Command
         parent::__construct();
 
         $this->consumer      = $consumer;
-        $this->logger        = $logger;
+        $this->logger        = $logger ?? new NullLogger;
         $this->cleaner       = $cleaner;
         $this->subscriptions = $subscriptions;
         $this->environment   = $environment;
