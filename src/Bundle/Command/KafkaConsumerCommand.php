@@ -24,7 +24,6 @@ class KafkaConsumerCommand extends Command
     protected LoggerInterface $logger;
     protected bool $run = true;
     protected Cleaner $cleaner;
-    protected string $environment;
 
     /**
      * @var iterable<KafkaSubscription>
@@ -38,8 +37,7 @@ class KafkaConsumerCommand extends Command
         KafkaConsumer $consumer,
         ?LoggerInterface $logger,
         Cleaner $cleaner,
-        iterable $subscriptions,
-        string $environment
+        iterable $subscriptions
     ) {
         parent::__construct();
 
@@ -47,7 +45,6 @@ class KafkaConsumerCommand extends Command
         $this->logger        = $logger ?? new NullLogger;
         $this->cleaner       = $cleaner;
         $this->subscriptions = $subscriptions;
-        $this->environment   = $environment;
     }
 
     protected function configure() : void

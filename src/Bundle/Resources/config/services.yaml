@@ -26,4 +26,3 @@ services:
     TicketSwap\Kafka\Bundle\Command\KafkaConsumerCommand:
         arguments:
             $subscriptions: !tagged 'kafka-consumer.subscription'
-            $environment: '%kernel.environment%'

@@ -53,8 +53,7 @@ class KafkaConsumerCommandTest extends Mockery\Adapter\Phpunit\MockeryTestCase
                 $this->kafkaConsumer,
                 $this->logger,
                 $this->cleaner,
-                [$this->subscription],
-                'dev'
+                [$this->subscription]
             )
         );
     }
