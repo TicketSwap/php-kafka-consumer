@@ -4,27 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a4af62b3aa68248e85ff460ab3b1591",
+    "content-hash": "5d4b8d767c58bc2a51aae5d64d9c38a1",
     "packages": [
         {
             "name": "long-running/long-running",
-            "version": "0.4.2",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LongRunning/LongRunning.git",
-                "reference": "e111fd178f03c24f4d014240f528ad7dfca4c4d2"
+                "reference": "58fc0fb3570ae02a1a8e5e5a73bc9fa04d00a08a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LongRunning/LongRunning/zipball/e111fd178f03c24f4d014240f528ad7dfca4c4d2",
-                "reference": "e111fd178f03c24f4d014240f528ad7dfca4c4d2",
+                "url": "https://api.github.com/repos/LongRunning/LongRunning/zipball/58fc0fb3570ae02a1a8e5e5a73bc9fa04d00a08a",
+                "reference": "58fc0fb3570ae02a1a8e5e5a73bc9fa04d00a08a",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1"
             },
             "require-dev": {
-                "doctrine/doctrine-bundle": "~1.0",
+                "doctrine/doctrine-bundle": "^2.0",
                 "doctrine/orm": "~2.3",
                 "phpunit/phpunit": "^7.4",
                 "sentry/sentry-symfony": "^3.0",
@@ -60,9 +60,9 @@
             "homepage": "http://github.com/LongRunning/LongRunning",
             "support": {
                 "issues": "https://github.com/LongRunning/LongRunning/issues",
-                "source": "https://github.com/LongRunning/LongRunning/tree/0.4.2"
+                "source": "https://github.com/LongRunning/LongRunning/tree/0.5.0"
             },
-            "time": "2019-11-27T09:29:28+00:00"
+            "time": "2020-09-21T12:49:02+00:00"
         },
         {
             "name": "psr/container",
