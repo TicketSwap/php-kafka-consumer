@@ -4,30 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "059cf0d73328ca97cb538a6fd9da0713",
+    "content-hash": "31bef2a1fbf7664b4f614ca48d3b0a71",
     "packages": [
         {
             "name": "long-running/core",
-            "version": "dev-main",
+            "version": "1.0.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LongRunning/core.git",
-                "reference": "595118864559e4c79ed14fde12adb45c5654ad4f"
+                "reference": "143b02703d2ba7c16b3620a50c478c1b364ea2d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LongRunning/core/zipball/595118864559e4c79ed14fde12adb45c5654ad4f",
-                "reference": "595118864559e4c79ed14fde12adb45c5654ad4f",
+                "url": "https://api.github.com/repos/LongRunning/core/zipball/143b02703d2ba7c16b3620a50c478c1b364ea2d9",
+                "reference": "143b02703d2ba7c16b3620a50c478c1b364ea2d9",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0"
             },
+            "conflict": {
+                "long-running/long-running": "*"
+            },
             "require-dev": {
                 "phpunit/phpunit": "^8.5.12",
                 "symfony/framework-bundle": "^4.4 || ^5.1"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -56,9 +58,9 @@
             "description": "Tools for working with long-running processes",
             "homepage": "http://github.com/LongRunning/LongRunning",
             "support": {
-                "source": "https://github.com/LongRunning/core/tree/main"
+                "source": "https://github.com/LongRunning/core/tree/1.0.0-RC1"
             },
-            "time": "2021-01-21T11:45:14+00:00"
+            "time": "2021-01-26T09:03:40+00:00"
         },
         {
             "name": "psr/container",
@@ -4011,7 +4013,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "long-running/core": 20
+        "long-running/core": 5
     },
     "prefer-stable": false,
     "prefer-lowest": false,
