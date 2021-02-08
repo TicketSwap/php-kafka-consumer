@@ -27,7 +27,7 @@
     },
     "require-dev": {
         "mockery/mockery": "^1.4.2",
-        "phpunit/phpunit": "^9.3",
+        "phpunit/phpunit": "^9.5",
         "kwn/php-rdkafka-stubs": "^2.0"
     },
     "scripts": {
