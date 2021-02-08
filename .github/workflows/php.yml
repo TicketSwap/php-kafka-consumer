@@ -10,8 +10,8 @@ jobs:
       matrix:
         php-versions: ['7.4','8.0']
         dependencies: ['normal', 'highest','lowest']
-        librdkafka-version: ['1.5.2']
-        rdkafka-version: ['4.0.4']
+        librdkafka-version: ['1.6.0']
+        rdkafka-version: ['5.0.0']
 
     name: PHP ${{ matrix.php-versions }} tests with ${{ matrix.dependencies }} dependencies
     steps:
